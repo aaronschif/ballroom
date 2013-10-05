@@ -1,5 +1,6 @@
 FAQ
 ===
+:long_title: Frequently Asked Questions
 
 Do I need any dance experience?
 	No, most of us are beginners ourselves.

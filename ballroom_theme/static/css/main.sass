@@ -1,17 +1,58 @@
 body
     font:
         size: 20px
+        family: Arial, Helvetica, sans-serif
     color: rgb(128,128,128)
     background: black
+    letter-spacing: 1px
 
-.navbar
-    .active a        
-        background-color: transparent !important
+a
+    color: red
+h1
+    text-align: center
+    display: block
+    margin:
+        left: auto
+        right: auto
+
+nav.navbar-default
+    .navbar-toggle
+        .icon-bar
+            background-color: grey
+        border-color: grey
+    &.navbar-collapse
+        border-color: red
+    .navbar-nav
+        li
+            &.active a
+                color: grey
+                text-decoration: underline
+                &:hover, &
+                    background: none
+            a
+                &.social
+                    img
+                        height: 30px
+                    padding:
+                        top: 10px
+                        bottom: 0px
+            text-align: center
+            color: grey
+            font:
+                size: 25px
+
     background: none
-    border-bottom:
+    border:
         color: red
-        style: double
-        width: 3px
+        bottom:
+            style: double
+            width: 3px
+
+.navbar-brand
+    padding-left: 45px
+    background:
+        size: contain
+        repeat: no-repeat
 
 .nav-social
     background:
@@ -19,3 +60,15 @@ body
         repeat: no-repeat
         position: left center
     margin-left: 15px
+
+dl
+    dd
+        padding:
+            left: 15px
+            bottom: 20px
+
+.align-center
+    display: block
+    margin:
+        left: auto
+        right: auto
