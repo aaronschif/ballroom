@@ -10,6 +10,8 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
+DEBUG = False
+
 SITEURL = 'http://ksu.edu/ballroom'
 RELATIVE_URLS = False
 

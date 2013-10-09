@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
+DEBUG = True
 
 AUTHOR = u'Aaron Schif'
 SITENAME = u'Swing & Salsa'
