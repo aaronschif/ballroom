@@ -17,7 +17,8 @@ DEFAULT_LANG = u'en'
 
 PLUGIN_PATH = "plugins"
 PLUGINS = [
-	"assets"
+	'assets',
+	'pelican_youtube',
 ]
 
 SOCIAL = [
