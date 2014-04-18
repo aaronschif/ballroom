@@ -2,16 +2,19 @@ from fabric.api import *
 import fabric.contrib.project as project
 import os
 
-env.deploy_path = 'output'
+env.build_path = 'output'
 env.content_path = 'content'
+
+env.production_serve = '/usr/local/data/www/ballroom'
+env.alpha_serve = '/usr/local/data/www/ballroom/_alpha'
 
 production = 'aaronschif@unix.ksu.edu:22'
 dest_path = '/usr/local/data/www/ballroom'
 
 def clean():
-    if os.path.isdir(env.deploy_path):
-        local('rm -rf {deploy_path}'.format(**env))
-        local('mkdir {deploy_path}'.format(**env))
+    if os.path.isdir(env.build_path):
+        local('rm -rf {build_path}'.format(**env))
+        local('mkdir {build_path}'.format(**env))
 
 def build(settings='local'):
     local('pelican {content_path} -s config/{settings}.py -o output'.format(settings=settings, **env))
@@ -24,24 +27,26 @@ def regenerate():
     local('pelican -r -s config/local.py')
 
 def serve():
-    local('cd {deploy_path} && python -m SimpleHTTPServer'.format(**env))
+    local('cd {build_path} && python -m SimpleHTTPServer'.format(**env))
 
 def reserve():
     build()
     serve()
 
 @hosts(production)
-def publish():
+def publish(role='alpha'):
     clean()
-    build('production')
+    build(role)
     project.rsync_project(
-        remote_dir=dest_path,
-        local_dir=env.deploy_path.rstrip('/') + '/',
+        remote_dir=getattr(env, role+'_serve'),
+        local_dir=env.build_path.rstrip('/') + '/',
         extra_opts='--omit-dir-times --no-perms',
+        exclude='_alpha',
         delete=True
     )
+    
     # put(
-    #     env.deploy_path,
+    #     env.build_path,
     #     dest_path
     # )
 

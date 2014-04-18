@@ -9,9 +9,9 @@ import sys
 sys.path.append(os.curdir)
 from config.common import *
 
-DEBUG = False
+DEBUG = True
 
-SITEURL = 'http://ksu.edu/ballroom'
+SITEURL = 'http://ksu.edu/ballroom/_alpha'
 RELATIVE_URLS = False
 
 DELETE_OUTPUT_DIRECTORY = True
