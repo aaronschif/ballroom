@@ -17,7 +17,7 @@ What if I don't want to dance with anyone but my significant other/partner?
 What if I'm not a KSU student?
 	You're welcome to come too! The club is open to the community as well.
 How much does it cost to join?
-	Dues are $10 per semester or $15 for the whole year.
+	Nothing. It's free!
 How do I join?
 	Drop in to one of our meetings or email.
 Do I need fancy dance shoes or clothes?

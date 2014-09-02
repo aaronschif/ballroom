@@ -1,7 +1,9 @@
 /.idea
+/*.komodoproject
 /output
-/.sass-cache
+*cache*
 
 *.pyc
 *.pid
+/.python-version
 *~

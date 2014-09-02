@@ -1,4 +1,4 @@
-fabric
-webassets
-pelican
-pelican-youtube
+fabric==1.9.1
+webassets==0.10.1
+pelican==3.4.0
+pelican-youtube==0.1.0

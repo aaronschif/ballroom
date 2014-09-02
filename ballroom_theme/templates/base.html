@@ -41,16 +41,18 @@
                 {% endfor %}
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                {% for page in SOCIAL %}
-                <li><a class="social" href="{{page.url}}"><img src="{{SITEURL}}/theme/img/{{page.img}}"></a></li>
-                {% endfor %}
+                <li>{% for page in SOCIAL %}
+                <a class="social" href="{{page.url}}"><img src="{{SITEURL}}/theme/img/{{page.img}}"></a>
+                {% endfor %}</li>
               </ul>
             </div><!--/.nav-collapse -->
           </div>
         </nav>
         <div class="container">
+            <div class="col-md-8 col-md-offset-2">
             {% block content %}
             {% endblock content %}
+            </div>
         </div>
     </body>
     {% assets filters="rjsmin", output="js/jquery.js" %}

@@ -45,11 +45,8 @@ nav.navbar-default {
   background-size: contain;
   background-repeat: no-repeat; }
 
-.nav-social {
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: left center;
-  margin-left: 15px; }
+nav a.social {
+  display: inline;}
 
 dl dd {
   padding-left: 15px;

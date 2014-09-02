@@ -15,10 +15,13 @@ TIMEZONE = 'Europe/Paris'
 
 DEFAULT_LANG = u'en'
 
-PLUGIN_PATH = "plugins"
+PLUGIN_PATHS = [
+    "../plugins"
+]
+
 PLUGINS = [
-	'assets',
-	'pelican_youtube',
+    'assets',
+    'pelican_youtube',
 ]
 
 SOCIAL = [

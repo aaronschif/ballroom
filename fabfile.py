@@ -23,8 +23,8 @@ def rebuild():
     clean()
     build()
 
-def regenerate():
-    local('pelican -r -s config/local.py')
+def regenerate(settings='local'):
+    local('pelican {content_path} -r -s config/{settings}.py -o output'.format(settings=settings, **env))
 
 def serve():
     local('cd {build_path} && python -m SimpleHTTPServer'.format(**env))
