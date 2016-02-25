@@ -1,3 +1,6 @@
+$accent_color: #d1d3d4
+$primary_color: #d1d3d4
+
 body
     font:
         size: 20px
@@ -7,7 +10,7 @@ body
     letter-spacing: 1px
 
 a
-    color: red
+    color: $primary_color
 h1
     text-align: center
     display: block
@@ -18,14 +21,14 @@ h1
 nav.navbar-default
     .navbar-toggle
         .icon-bar
-            background-color: grey
-        border-color: grey
+            background-color: $accent_color
+        border-color: $accent_color
     &.navbar-collapse
-        border-color: red
+        border-color: $primary_color
     .navbar-nav
         li
             &.active a
-                color: grey
+                color: $accent_color
                 text-decoration: underline
                 &:hover, &
                     background: none
@@ -37,13 +40,13 @@ nav.navbar-default
                         top: 10px
                         bottom: 0px
             text-align: center
-            color: grey
+            color: $accent_color
             font:
                 size: 25px
 
     background: none
     border:
-        color: red
+        color: $primary_color
         bottom:
             style: double
             width: 3px

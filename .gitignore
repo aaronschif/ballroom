@@ -7,3 +7,4 @@
 *.pid
 /.python-version
 *~
+/.doit.db

@@ -6,7 +6,7 @@ body {
   letter-spacing: 1px; }
 
 a {
-  color: red; }
+  color: #d1d3d4; }
 
 h1 {
   text-align: center;
@@ -16,21 +16,21 @@ h1 {
 
 nav.navbar-default {
   background: none;
-  border-color: red;
+  border-color: #d1d3d4;
   border-bottom-style: double;
   border-bottom-width: 3px; }
   nav.navbar-default .navbar-toggle {
-    border-color: grey; }
+    border-color: #d1d3d4; }
     nav.navbar-default .navbar-toggle .icon-bar {
-      background-color: grey; }
+      background-color: #d1d3d4; }
   nav.navbar-default.navbar-collapse {
-    border-color: red; }
+    border-color: #d1d3d4; }
   nav.navbar-default .navbar-nav li {
     text-align: center;
-    color: grey;
+    color: #d1d3d4;
     font-size: 25px; }
     nav.navbar-default .navbar-nav li.active a {
-      color: grey;
+      color: #d1d3d4;
       text-decoration: underline; }
       nav.navbar-default .navbar-nav li.active a:hover, nav.navbar-default .navbar-nav li.active a {
         background: none; }
@@ -45,8 +45,11 @@ nav.navbar-default {
   background-size: contain;
   background-repeat: no-repeat; }
 
-nav a.social {
-  display: inline;}
+.nav-social {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+  margin-left: 15px; }
 
 dl dd {
   padding-left: 15px;

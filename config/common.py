@@ -21,7 +21,6 @@ PLUGIN_PATHS = [
 
 PLUGINS = [
     'assets',
-    'pelican_youtube',
 ]
 
 SOCIAL = [

@@ -7,10 +7,11 @@
         <meta name="viewport" content="width=device-width">
         <link rel="shortcut icon" href="{{SITEURL}}/theme/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="{{SITEURL}}/theme/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="{{SITEURL}}/theme/img/dancers.svg" type="image/svg">
 		{% assets filters="sass,cssmin", output="css/bootstrap.css" %}
 		<link rel="stylesheet" href="{{ SITEURL }}/{{ ASSET_URL }}">
 		{% endassets %}
-        {% assets filters="sass,cssmin", output="css/main.css" %}
+        {% assets filters="sass,cssmin", output="css/main.min.css", "css/main.sass"%}
 		<link rel="stylesheet" href="{{ SITEURL }}/{{ ASSET_URL }}">
 		{% endassets %}
         {% if not DEBUG %}
@@ -32,7 +33,7 @@
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" style="background-image:url('{{SITEURL}}/theme/img/bigdancers.png')" href="{{SITEURL}}/">{{SITENAME}}</a>
+              <a class="navbar-brand" style="background-image:url('{{SITEURL}}/theme/img/dancers.svg')" href="{{SITEURL}}/">{{SITENAME}}</a>
             </div>
             <div class="collapse navbar-collapse">
               <ul class="nav navbar-nav">
