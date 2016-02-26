@@ -36,7 +36,8 @@ def _hash_asset(task):
     old_filename = str(Path(link_filename).resolve())
 
     shutil.move(old_filename, new_filename)
-    os.remove(link_filename)
+    if os.path.exists(link_filename):
+        os.remove(link_filename)
     os.symlink(Path(new_filename).name, link_filename)
 
 
@@ -68,11 +69,18 @@ def _compile_sass(task):
 
 
 def task_sass_files():
+    OUTPUT = 'output/static/'
+
+    yield {
+        'name': None,
+        'actions': [create_folder(OUTPUT)]
+    }
+
     yield {
         'name': 'sass',
         'actions': [_compile_sass],
         'file_dep': ['ballroom_theme/static/css/main.sass'],
-        'targets': ['ballroom_theme/static/css/main.css'],
+        'targets': [OUTPUT+'main.css'],
     }
 
 def task_image_files():
@@ -106,7 +114,7 @@ def task_image_files():
     }
 
 def task_hash_assets():
-    for f in itertools.chain(task_image_files()):
+    for f in itertools.chain(task_image_files(), task_sass_files()):
         for i in f.get('targets', []):
             yield {
                 'name': i,
