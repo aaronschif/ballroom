@@ -1,6 +1,8 @@
 from pathlib import Path
 import hashlib
 import os
+import itertools
+import shutil
 
 import sass
 import cairosvg
@@ -16,6 +18,28 @@ def _minify_svg(task):
         o.write(
             cairosvg.svg2svg(url=filename)
             )
+
+def _hash_asset(task):
+    (filename,) = task.file_dep
+
+    with open(filename, 'rb') as f:
+        m = hashlib.md5()
+        m.update(f.read())
+        digest = m.hexdigest()[:10]
+
+    file_path = Path(filename)
+    parent, name = str(file_path.parent), str(file_path.name)
+    a, b = name.split('.', 1)
+
+    link_filename = filename
+    new_filename = '{}/{}.{}.{}'.format(parent, a, digest, b)
+    old_filename = str(Path(link_filename).resolve())
+
+    shutil.move(old_filename, new_filename)
+    os.remove(link_filename)
+    os.symlink(Path(new_filename).name, link_filename)
+
+
 
 def _convert_svg_png(task):
     (filename,) = task.file_dep
@@ -82,7 +106,13 @@ def task_image_files():
     }
 
 def task_hash_assets():
-    pass
+    for f in itertools.chain(task_image_files()):
+        for i in f.get('targets', []):
+            yield {
+                'name': i,
+                'actions': [_hash_asset],
+                'file_dep': [i],
+            }
 
 # def task_pelican():
 #     yield {
