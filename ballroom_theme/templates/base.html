@@ -5,24 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>{%block title%}{{SITENAME}}{%endblock%}</title>
         <meta name="viewport" content="width=device-width">
-        <link rel="shortcut icon" href="{{SITEURL}}/theme/img/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="{{SITEURL}}/theme/img/dancers.gif" type="image/x-icon">
-        <link rel="icon" href="{{SITEURL}}/theme/img/dancers.svg" type="image/svg">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        {% assets filters="cssmin", output="css/main.min.css", "css/main.css" %}
-		<link rel="stylesheet" href="{{ SITEURL }}/{{ ASSET_URL }}">
-		{% endassets %}
-        {% if not DEBUG %}
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-          ga('create', 'UA-44595856-1', 'k-state.edu');
-          ga('send', 'pageview');
-        </script>
-        {% endif %}
+        <link rel="shortcut icon" href="{{"static/dancers.gif"|static}}" type="image/gif">
+        <link rel="icon" href="{{"static/dancers.svg"|static}}" type="image/svg">
+		<link rel="stylesheet" href="{{ "static/main.css"|static }}">
     </head>
     <body>
         <nav class="navbar navbar-default navbar-static-top">
@@ -31,18 +17,18 @@
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" style="background-image:url('{{SITEURL}}/theme/img/dancers.min.svg')" href="{{SITEURL}}/">{{SITENAME}}</a>
+              <a class="navbar-brand" style="background-image:url('{{"static/dancers.svg"|static}}')" href="/">Swing & Salsa</a>
             </div>
             <div class="collapse navbar-collapse">
               <ul class="nav navbar-nav">
-                {% for page in pages if not page.nav_omit %}
-                <li class="{% if page.save_as == output_file %}active{%endif%}"><a href="{{SITEURL}}/{{page.url}}">{{page.title}}</a></li>
-                {% endfor %}
+                  <li><a href="/faq.html">FAQ</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                <li>{% for page in SOCIAL %}
-                <a class="social" href="{{page.url}}"><img src="{{SITEURL}}/theme/img/{{page.img}}"></a>
-                {% endfor %}</li>
+                <li>
+                    <a class="social" href="https://www.facebook.com/groups/5882359073/"><img src="{{"static/facebook.png"|static}}"></a>
+                    <a class="social" href="mailto:ballroom-l@listserv.ksu.edu"><img src="{{"static/email.png"|static}}"></a>
+                    <a class="social" href="http://www.youtube.com/ksuswingsalsa"><img src="{{"static/youtube.png"|static}}"></a>
+                </li>
               </ul>
             </div><!--/.nav-collapse -->
           </div>

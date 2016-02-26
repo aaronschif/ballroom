@@ -3,12 +3,33 @@ import hashlib
 import os
 import itertools
 import shutil
+from docutils.core import publish_parts
 
 import sass
 import cairosvg
 from PIL import Image
+from jinja2 import Environment, meta, FileSystemLoader, environmentfilter, Markup
 from doit.tools import create_folder
 
+
+TEMPLATES_DIR = 'ballroom_theme/templates/'
+OUTPUT_DIR = 'output/'
+OUTPUT_STATIC = 'output/static/'
+
+def _jinja_rst(f):
+    html = publish_parts(source=str(f), writer_name='html')['body']
+    return Markup(html)
+
+def _jinja_resolve_asset(f):
+    path = Path(OUTPUT_DIR+f).resolve()
+    output = Path(OUTPUT_DIR).resolve()
+    return str(path.relative_to(output))
+
+env = Environment(
+    loader=FileSystemLoader(TEMPLATES_DIR)
+)
+env.filters['static'] = _jinja_resolve_asset
+env.filters['load_rst'] = _jinja_rst
 
 def _minify_svg(task):
     (filename,) = task.file_dep
@@ -18,6 +39,22 @@ def _minify_svg(task):
         o.write(
             cairosvg.svg2svg(url=filename)
             )
+
+def _cp(task):
+    (filename,) = task.file_dep
+    (target,) = task.targets
+
+    shutil.copy(filename, target)
+
+def _compile_jinja(filename, target):
+    # (filename,) = task.file_dep
+    # # (target,) = task.targets
+    # target = f
+
+    t = env.get_template(filename)
+
+    with open(target, 'w') as f:
+        f.write(t.render())
 
 def _hash_asset(task):
     (filename,) = task.file_dep
@@ -95,7 +132,7 @@ def task_image_files():
         'name': 'svg',
         'actions': [_minify_svg],
         'file_dep': ['ballroom_theme/static/img/dancers.svg'],
-        'targets': [OUTPUT+'dancers.min.svg'],
+        'targets': [OUTPUT+'dancers.svg'],
     }
 
     yield {
@@ -113,6 +150,31 @@ def task_image_files():
 
     }
 
+    yield {
+        'name': 'facebook',
+        'actions': [_cp],
+        'file_dep': ['ballroom_theme/static/img/facebook.png'],
+        'targets': [OUTPUT+'facebook.png'],
+
+    }
+
+    yield {
+        'name': 'youtube',
+        'actions': [_cp],
+        'file_dep': ['ballroom_theme/static/img/youtube.png'],
+        'targets': [OUTPUT+'youtube.png'],
+
+    }
+
+    yield {
+        'name': 'email',
+        'actions': [_cp],
+        'file_dep': ['ballroom_theme/static/img/email.png'],
+        'targets': [OUTPUT+'email.png'],
+
+    }
+
+
 def task_hash_assets():
     for f in itertools.chain(task_image_files(), task_sass_files()):
         for i in f.get('targets', []):
@@ -121,6 +183,27 @@ def task_hash_assets():
                 'actions': [_hash_asset],
                 'file_dep': [i],
             }
+
+def task_html_files():
+    OUTPUT = 'output/'
+    deps = [TEMPLATES_DIR+f for f in env.list_templates()]
+    yield {
+        'name': None,
+        'actions': [create_folder(OUTPUT)],
+        'task_dep': ['hash_assets'],
+    }
+
+    yield {
+        'name': 'index',
+        'actions': [(_compile_jinja, ['index.html', OUTPUT+'index.html'])],
+        'file_dep': deps,
+    }
+
+    yield {
+        'name': 'faq',
+        'actions': [(_compile_jinja, ['faq.html', OUTPUT+'faq.html'])],
+        'file_dep': deps
+    }
 
 # def task_pelican():
 #     yield {

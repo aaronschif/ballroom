@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% import "faq.rst" as content %}
+
+{% block title %}FAQ | {{super()}}{% endblock %}
+
+{% block content %}
+    {{content|load_rst}}
+{% endblock content %}

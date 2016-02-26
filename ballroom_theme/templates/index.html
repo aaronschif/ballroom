@@ -1,5 +1,6 @@
 {% extends "base.html" %}
+{% import "index.rst" as content %}
 
 {% block content %}
-
+    {{content|load_rst}}  
 {% endblock content %}
