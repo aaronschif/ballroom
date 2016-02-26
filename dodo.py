@@ -1,14 +1,18 @@
+from pathlib import Path
+import hashlib
+import os
+
 import sass
 import cairosvg
-from pathlib import Path
 from PIL import Image
+from doit.tools import create_folder
 
 
 def _minify_svg(task):
     (filename,) = task.file_dep
     (target,) = task.targets
 
-    with open(target, 'wb') as o, open(filename) as i:
+    with open(target, 'wb') as o:
         o.write(
             cairosvg.svg2svg(url=filename)
             )
@@ -48,31 +52,41 @@ def task_sass_files():
     }
 
 def task_image_files():
+    OUTPUT = 'output/static/'
+
+    yield {
+        'name': None,
+        'actions': [create_folder(OUTPUT)]
+    }
+
     yield {
         'name': 'svg',
         'actions': [_minify_svg],
         'file_dep': ['ballroom_theme/static/img/dancers.svg'],
-        'targets': ['ballroom_theme/static/img/dancers.min.svg'],
+        'targets': [OUTPUT+'dancers.min.svg'],
     }
 
     yield {
         'name': 'png',
         'actions': [_convert_svg_png],
         'file_dep': ['ballroom_theme/static/img/dancers.svg'],
-        'targets': ['ballroom_theme/static/img/dancers.png'],
+        'targets': [OUTPUT+'dancers.png'],
     }
 
     yield {
         'name': 'ico',
         'actions': [_convert_png_ico],
         'file_dep': ['ballroom_theme/static/img/dancers.png'],
-        'targets': ['ballroom_theme/static/img/dancers.gif'],
+        'targets': [OUTPUT+'dancers.gif'],
 
     }
 
-def task_pelican():
-    yield {
-        'name': 'pelican',
-        'actions': ['pelican content -s config/local.py -o output'],
-        'task_dep': ['image_files', 'sass_files'],
-    }
+def task_hash_assets():
+    pass
+
+# def task_pelican():
+#     yield {
+#         'name': 'pelican',
+#         'actions': ['pelican content -s config/local.py -o output'],
+#         'task_dep': ['image_files', 'sass_files'],
+#     }
