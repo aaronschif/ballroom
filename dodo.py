@@ -9,7 +9,7 @@ import sass
 import cairosvg
 from PIL import Image
 from jinja2 import Environment, meta, FileSystemLoader, environmentfilter, Markup
-from doit.tools import create_folder
+from doit.tools import create_folder, result_dep
 
 
 TEMPLATES_DIR = 'ballroom_theme/templates/'
@@ -73,11 +73,9 @@ def _hash_asset(task):
     old_filename = str(Path(link_filename).resolve())
 
     shutil.move(old_filename, new_filename)
-    if os.path.exists(link_filename):
+    if os.path.islink(link_filename):
         os.remove(link_filename)
     os.symlink(Path(new_filename).name, link_filename)
-
-
 
 def _convert_svg_png(task):
     (filename,) = task.file_dep
@@ -152,25 +150,25 @@ def task_image_files():
 
     yield {
         'name': 'facebook',
-        'actions': [_cp],
-        'file_dep': ['ballroom_theme/static/img/facebook.png'],
-        'targets': [OUTPUT+'facebook.png'],
+        'actions': [_minify_svg],
+        'file_dep': ['ballroom_theme/static/img/facebook.svg'],
+        'targets': [OUTPUT+'facebook.svg'],
 
     }
 
     yield {
         'name': 'youtube',
-        'actions': [_cp],
-        'file_dep': ['ballroom_theme/static/img/youtube.png'],
-        'targets': [OUTPUT+'youtube.png'],
+        'actions': [_minify_svg],
+        'file_dep': ['ballroom_theme/static/img/youtube.svg'],
+        'targets': [OUTPUT+'youtube.svg'],
 
     }
 
     yield {
         'name': 'email',
-        'actions': [_cp],
-        'file_dep': ['ballroom_theme/static/img/email.png'],
-        'targets': [OUTPUT+'email.png'],
+        'actions': [_minify_svg],
+        'file_dep': ['ballroom_theme/static/img/email.svg'],
+        'targets': [OUTPUT+'email.svg'],
 
     }
 
@@ -190,19 +188,22 @@ def task_html_files():
     yield {
         'name': None,
         'actions': [create_folder(OUTPUT)],
-        'task_dep': ['hash_assets'],
     }
 
     yield {
         'name': 'index',
         'actions': [(_compile_jinja, ['index.html', OUTPUT+'index.html'])],
         'file_dep': deps,
+        'task_dep': ['hash_assets'],
+        'uptodate': [result_dep('sass_files'), result_dep('image_files')],
     }
 
     yield {
         'name': 'faq',
         'actions': [(_compile_jinja, ['faq.html', OUTPUT+'faq.html'])],
-        'file_dep': deps
+        'file_dep': deps,
+        'task_dep': ['hash_assets'],
+        'uptodate': [result_dep('sass_files'), result_dep('image_files')],
     }
 
 # def task_pelican():

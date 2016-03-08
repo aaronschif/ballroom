@@ -4,5 +4,7 @@
 {% block title %}FAQ | {{super()}}{% endblock %}
 
 {% block content %}
+<div class='col-md-8 col-md-offset-2'>
     {{content|load_rst}}
+</div>
 {% endblock content %}

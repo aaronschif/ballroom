@@ -1,16 +1,18 @@
 $accent_color: #d1d3d4
-$primary_color: #d1d3d4
+$primary_color: black
 
 body
     font:
         size: 20px
         family: Arial, Helvetica, sans-serif
-    color: rgb(128,128,128)
-    background: black
+    color: black
+    // background: #ddccdd
+    background: rgb(128,128,128)
     letter-spacing: 1px
 
 a
-    color: $primary_color
+    color: $accent_color
+
 h1
     text-align: center
     display: block
@@ -19,14 +21,19 @@ h1
         right: auto
 
 nav
+    &.navbar.navbar-default a
+        &:hover
+            color: $accent_color
+        color: black
+
     a.social
         display: inline
 
 nav.navbar-default
     .navbar-toggle
         .icon-bar
-            background-color: $accent_color
-        border-color: $accent_color
+            background-color: $primary_color
+        border-color: $primary_color
     &.navbar-collapse
         border-color: $primary_color
     .navbar-nav
